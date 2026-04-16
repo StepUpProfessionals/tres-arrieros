@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta Comercial — Step Up Business Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   VARIABLES — Easy to customize
+   ============================================ */
+:root {
+  --navy: #0B1628;
+  --navy-light: #132240;
+  --navy-mid: #1A2D4A;
+  --teal: #2A7A6E;
+  --teal-glow: #34C6AF;
+  --amber: #D4A853;
+  --amber-soft: #F5DDA0;
+  --white: #F0F2F5;
+  --gray: #8A95A8;
+  --danger: #E8524A;
+  --card-bg: rgba(19, 34, 64, 0.6);
+  --glass: rgba(255,255,255,0.04);
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: var(--white);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(42,122,110,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,122,110,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================
+   UTILITY
+   ============================================ */
+.container { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--teal);
+}
+
+/* ============================================
+   TOP BAR
+   ============================================ */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(11,22,40,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(42,122,110,0.15);
+  padding: 14px 24px;
+}
+.topbar-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.topbar-brand {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: var(--teal);
+}
+.topbar-status {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--amber);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.topbar-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--amber);
+  border-radius: 50%;
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ============================================
+   COUNTDOWN BAR
+   ============================================ */
+.countdown-bar {
+  margin-top: 52px;
+  background: linear-gradient(135deg, rgba(212,168,83,0.12), rgba(42,122,110,0.08));
+  border-bottom: 1px solid rgba(212,168,83,0.2);
+  padding: 16px 24px;
+  text-align: center;
+}
+.countdown-bar.expired {
+  background: linear-gradient(135deg, rgba(232,82,74,0.12), rgba(232,82,74,0.05));
+  border-bottom-color: rgba(232,82,74,0.3);
+}
+.countdown-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 8px;
+}
+.countdown-timer {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+.countdown-unit { text-align: center; }
+.countdown-number {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 1.6rem;
+  color: var(--white);
+  line-height: 1;
+  min-width: 48px;
+  display: inline-block;
+}
+.countdown-text {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 4px;
+}
+.countdown-separator {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  color: var(--teal);
+  opacity: 0.5;
+  line-height: 1;
+}
+.countdown-expired-msg {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: var(--danger);
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+  padding: 100px 0 60px;
+  text-align: center;
+  position: relative;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+  opacity: 0.2;
+}
+.hero-classified {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--amber);
+  border: 1px solid rgba(212,168,83,0.3);
+  display: inline-block;
+  padding: 6px 20px;
+  margin-bottom: 32px;
+}
+.hero-greeting {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 1.1rem;
+  color: var(--gray);
+  margin-bottom: 12px;
+}
+.hero-greeting strong {
+  color: var(--white);
+  font-weight: 600;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 7vw, 4.2rem);
+  letter-spacing: 2px;
+  line-height: 1.05;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--white) 40%, var(--teal-glow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-subtitle {
+  font-weight: 300;
+  font-size: 1.05rem;
+  color: var(--gray);
+  max-width: 520px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--teal), #1F5F55);
+  color: var(--white);
+  box-shadow: 0 4px 20px rgba(42,122,110,0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(42,122,110,0.45);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--teal-glow);
+  border: 1px solid rgba(42,122,110,0.4);
+}
+.btn-secondary:hover {
+  background: rgba(42,122,110,0.1);
+  border-color: var(--teal);
+}
+.btn-amber {
+  background: linear-gradient(135deg, var(--amber), #B88D3A);
+  color: var(--navy);
+  box-shadow: 0 4px 20px rgba(212,168,83,0.3);
+}
+.btn-amber:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(212,168,83,0.45);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--gray);
+  border: 1px solid rgba(138,149,168,0.2);
+  padding: 10px 20px;
+  font-size: 0.8rem;
+}
+.btn-ghost:hover {
+  color: var(--white);
+  border-color: rgba(138,149,168,0.5);
+}
+
+/* ============================================
+   MISSION — What you're getting
+   ============================================ */
+.mission { padding: 80px 0; }
+.mission-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: 1px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+.mission-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(42,122,110,0.1);
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.mission-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--teal), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.mission-card:hover {
+  border-color: rgba(42,122,110,0.3);
+  transform: translateY(-4px);
+}
+.mission-card:hover::before { opacity: 1; }
+.mission-icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(42,122,110,0.12);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+.mission-card h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+.mission-card p {
+  font-size: 0.82rem;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* ============================================
+   EXAMPLE PREVIEW
+   ============================================ */
+.example { padding: 80px 0; }
+.example-box {
+  background: var(--card-bg);
+  border: 1px solid rgba(42,122,110,0.15);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.example-browser {
+  background: var(--navy-mid);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.browser-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+}
+.browser-dot:nth-child(1) { background: #E8524A; }
+.browser-dot:nth-child(2) { background: #D4A853; }
+.browser-dot:nth-child(3) { background: #34C6AF; }
+.browser-url {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--gray);
+  letter-spacing: 0.5px;
+}
+.example-preview {
+  position: relative;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, var(--navy-light), var(--navy));
+}
+.example-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+.example-placeholder {
+  text-align: center;
+  padding: 60px 20px;
+}
+.example-placeholder-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+.example-placeholder p {
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+.example-footer {
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.example-footer-text {
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+.example-footer-text strong { color: var(--white); }
+
+/* ============================================
+   PROCESS
+   ============================================ */
+.process { padding: 80px 0; }
+.process-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: 1px;
+  margin-bottom: 48px;
+  text-align: center;
+}
+.process-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+.process-step {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  position: relative;
+  padding-bottom: 40px;
+}
+.process-step:last-child { padding-bottom: 0; }
+.step-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 40px;
+}
+.step-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(42,122,110,0.15);
+  border: 2px solid var(--teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--teal-glow);
+  flex-shrink: 0;
+}
+.step-connector {
+  width: 2px;
+  flex: 1;
+  background: linear-gradient(180deg, var(--teal), transparent);
+  opacity: 0.2;
+  margin-top: 4px;
+}
+.step-content h3 {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 4px;
+  padding-top: 8px;
+}
+.step-content p {
+  font-size: 0.82rem;
+  color: var(--gray);
+}
+
+/* ============================================
+   PLAN INFO
+   ============================================ */
+.plan-info {
+  padding: 80px 0;
+  text-align: center;
+}
+.plan-badge {
+  display: inline-block;
+  padding: 8px 24px;
+  background: linear-gradient(135deg, rgba(42,122,110,0.15), rgba(42,122,110,0.05));
+  border: 1px solid rgba(42,122,110,0.3);
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--teal-glow);
+  margin-bottom: 20px;
+}
+.plan-info h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.plan-info p {
+  font-size: 0.9rem;
+  color: var(--gray);
+  max-width: 500px;
+  margin: 0 auto 32px;
+  line-height: 1.7;
+}
+.plan-download-box {
+  background: var(--card-bg);
+  border: 1px solid rgba(212,168,83,0.2);
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.plan-download-box p { margin-bottom: 24px; }
+
+/* ============================================
+   OTHER SERVICES
+   ============================================ */
+.services { padding: 80px 0; }
+.services-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.services-sub {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--gray);
+  margin-bottom: 40px;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.service-card {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 24px 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.service-card:hover {
+  border-color: rgba(42,122,110,0.2);
+  background: rgba(42,122,110,0.05);
+}
+.service-icon { font-size: 1.4rem; margin-bottom: 12px; }
+.service-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
+.service-card p { font-size: 0.75rem; color: var(--gray); line-height: 1.5; }
+
+/* ============================================
+   CTA FINAL
+   ============================================ */
+.cta-final {
+  padding: 80px 0;
+  text-align: center;
+  position: relative;
+}
+.cta-final::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+  opacity: 0.15;
+}
+.cta-final h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.cta-final p {
+  font-size: 0.9rem;
+  color: var(--gray);
+  max-width: 440px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+}
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  padding: 40px 24px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+}
+.footer-brand {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--teal);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+.footer-links {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.footer-links a {
+  font-size: 0.75rem;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.footer-links a:hover { color: var(--teal-glow); }
+.footer-note {
+  font-size: 0.65rem;
+  color: rgba(138,149,168,0.5);
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 640px) {
+  .topbar-inner { flex-direction: column; gap: 6px; }
+  .countdown-timer { gap: 10px; }
+  .countdown-number { font-size: 1.2rem; min-width: 36px; }
+  .countdown-separator { font-size: 1.2rem; }
+  .hero { padding: 80px 0 50px; }
+  .hero-ctas { flex-direction: column; align-items: center; }
+  .btn { width: 100%; justify-content: center; max-width: 300px; }
+  .mission-grid { grid-template-columns: 1fr; }
+  .example-footer { flex-direction: column; text-align: center; }
+  .process-step { gap: 16px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .cta-buttons { flex-direction: column; align-items: center; }
+  .plan-download-box { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- =========== TOP BAR =========== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-brand">STEP UP BUSINESS SOLUTIONS</div>
+    <div class="topbar-status">Propuesta activa</div>
+  </div>
+</header>
+
+<!-- =========== COUNTDOWN =========== -->
+<div class="countdown-bar" id="countdownBar">
+  <div class="countdown-label">Tiempo restante de esta propuesta</div>
+  <div class="countdown-timer" id="countdownTimer">
+    <div class="countdown-unit">
+      <div class="countdown-number" id="cdDays">00</div>
+      <div class="countdown-text">Días</div>
+    </div>
+    <div class="countdown-separator">:</div>
+    <div class="countdown-unit">
+      <div class="countdown-number" id="cdHours">00</div>
+      <div class="countdown-text">Horas</div>
+    </div>
+    <div class="countdown-separator">:</div>
+    <div class="countdown-unit">
+      <div class="countdown-number" id="cdMins">00</div>
+      <div class="countdown-text">Min</div>
+    </div>
+    <div class="countdown-separator">:</div>
+    <div class="countdown-unit">
+      <div class="countdown-number" id="cdSecs">00</div>
+      <div class="countdown-text">Seg</div>
+    </div>
+  </div>
+</div>
+
+<!-- =========== HERO =========== -->
+<section class="hero fade-in">
+  <div class="container">
+    <div class="hero-classified">◆&ensp;Propuesta exclusiva&ensp;◆</div>
+    <p class="hero-greeting">Buenas tardes, <strong>Julio Giraldo</strong></p>
+    <h1 class="hero-title">SU MISIÓN, SI DECIDE<br>ACEPTARLA</h1>
+    <p class="hero-subtitle">
+      Una presencia digital profesional que presenta su negocio con claridad, genera confianza y convierte visitas en contactos reales.
+    </p>
+    <div class="hero-ctas">
+      <a href="#ejemplo" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        Ver ejemplo
+      </a>
+      <a href="https://stepuplanguages.com/wp-content/uploads/2026/04/Cotizacion_Los_Tres_Arrieros_CO-002.pdf" class="btn btn-secondary" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Descargar propuesta
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =========== MISSION — What you're getting =========== -->
+<section class="mission" id="mision">
+  <div class="container">
+    <div class="section-label">Lo que incluye su misión</div>
+    <h2 class="mission-heading fade-in">TODO ESTO ESTÁ<br>EN SU PLAN</h2>
+    <div class="mission-grid">
+      <div class="mission-card fade-in">
+        <div class="mission-icon">🌐</div>
+        <h3>Landing page profesional</h3>
+        <p>Página comercial de una sola vista, diseñada para convertir visitantes en clientes.</p>
+      </div>
+      <div class="mission-card fade-in">
+        <div class="mission-icon">📱</div>
+        <h3>Adaptable a todo dispositivo</h3>
+        <p>Se ve impecable en celular, tableta y computador. Sin importar cómo la vean.</p>
+      </div>
+      <div class="mission-card fade-in">
+        <div class="mission-icon">📍</div>
+        <h3>Mapa y contacto integrados</h3>
+        <p>Ubicación, WhatsApp, teléfono y redes sociales accesibles en un solo lugar.</p>
+      </div>
+      <div class="mission-card fade-in">
+        <div class="mission-icon">🔗</div>
+        <h3>Código QR de cortesía</h3>
+        <p>Un QR listo para compartir en tarjetas, volantes o redes. Directo a su página.</p>
+      </div>
+      <div class="mission-card fade-in">
+        <div class="mission-icon">⚡</div>
+        <h3>Implementación incluida</h3>
+        <p>Publicación, configuración y un ajuste final incluido sin costo adicional.</p>
+      </div>
+      <div class="mission-card fade-in">
+        <div class="mission-icon">🎯</div>
+        <h3>Enfocada en resultados</h3>
+        <p>Cada sección pensada para generar confianza y motivar la acción del visitante.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========== EXAMPLE PREVIEW =========== -->
+<section class="example" id="ejemplo">
+  <div class="container">
+    <div class="section-label">Página de ejemplo</div>
+    <div class="example-box fade-in">
+      <div class="example-browser">
+        <div class="browser-dot"></div>
+        <div class="browser-dot"></div>
+        <div class="browser-dot"></div>
+        <div class="browser-url">https://stepupprofessionals.github.io/espacio-verde/</div>
+      </div>
+      <div class="example-preview" id="examplePreview">
+        <!-- Si EJEMPLO_IMAGEN está vacío, se muestra placeholder vía JS -->
+      </div>
+      <div class="example-footer">
+        <div class="example-footer-text">
+          <strong>Así se ve en acción.</strong> Su página tendrá este nivel de calidad.
+        </div>
+        <a href="https://stepupprofessionals.github.io/espacio-verde/" class="btn btn-primary" target="_blank">
+          Ver página completa →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========== PROCESS =========== -->
+<section class="process">
+  <div class="container">
+    <div class="section-label">El proceso</div>
+    <h2 class="process-heading fade-in">4 PASOS. SIN COMPLICACIONES.</h2>
+    <div class="process-steps">
+      <div class="process-step fade-in">
+        <div class="step-line">
+          <div class="step-dot">01</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Aprobación</h3>
+          <p>Confirma la propuesta por WhatsApp o correo.</p>
+        </div>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-line">
+          <div class="step-dot">02</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Insumos</h3>
+          <p>Nos envía textos, fotos y datos de su negocio.</p>
+        </div>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-line">
+          <div class="step-dot">03</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Desarrollo</h3>
+          <p>Diseñamos, implementamos y configuramos todo.</p>
+        </div>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-line">
+          <div class="step-dot">04</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Entrega</h3>
+          <p>Su página publicada y lista para recibir clientes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========== PLAN & PDF =========== -->
+<section class="plan-info" id="propuesta">
+  <div class="container">
+    <div class="plan-badge">Plan Presencia</div>
+    <h2 class="fade-in">TODOS LOS DETALLES<br>EN UN SOLO DOCUMENTO</h2>
+    <p class="fade-in">
+      Alcance, tiempos, inversión, garantía y condiciones. Todo está en su cotización formal.
+    </p>
+    <div class="plan-download-box fade-in">
+      <p style="font-size:0.85rem; color:var(--gray);">
+        Consulte el documento completo con todos los términos y condiciones de la propuesta.
+      </p>
+      <a href="https://stepuplanguages.com/wp-content/uploads/2026/04/Cotizacion_Los_Tres_Arrieros_CO-002.pdf" class="btn btn-amber" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Descargar cotización PDF
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =========== OTHER SERVICES =========== -->
+<section class="services">
+  <div class="container">
+    <div class="section-label">Más allá de la landing</div>
+    <h2 class="services-heading fade-in">SOLUCIONES QUE PUEDEN<br>COMPLEMENTAR SU NEGOCIO</h2>
+    <p class="services-sub fade-in">Servicios escalables que puede activar cuando lo necesite.</p>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-icon">⚙️</div>
+        <h3>Automatización</h3>
+        <p>Procesos que trabajan solos para que usted no tenga que hacerlo.</p>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">📇</div>
+        <h3>CRM de clientes</h3>
+        <p>Organice y gestione su base de clientes de forma profesional.</p>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">📊</div>
+        <h3>Datos y organización</h3>
+        <p>Bases de datos comerciales claras para tomar mejores decisiones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========== CTA FINAL =========== -->
+<section class="cta-final">
+  <div class="container">
+    <h2 class="fade-in">¿ACEPTA<br>LA MISIÓN?</h2>
+    <p class="fade-in">Un solo paso separa su negocio de una presencia digital profesional.</p>
+    <div class="cta-buttons">
+      <a href="https://wa.me/573005171856?text=Hola%2C%20me%20interesa%20la%20propuesta%20CO-002.%20Quiero%20avanzar." class="btn btn-amber" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 0 0 .611.611l4.458-1.495A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.387 0-4.593-.798-6.364-2.143l-.444-.333-3.16 1.06 1.06-3.16-.333-.444A9.94 9.94 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Escribir por WhatsApp
+      </a>
+      <a href="https://tech-solutions.stepuplanguages.com/" class="btn btn-secondary" target="_blank">
+        Conocer más servicios →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =========== FOOTER =========== -->
+<footer class="footer">
+  <div class="footer-brand">STEP UP BUSINESS SOLUTIONS</div>
+  <div class="footer-links">
+    <a href="https://wa.me/573005171856" target="_blank">WhatsApp</a>
+    <a href="https://tech-solutions.stepuplanguages.com/" target="_blank">Sitio web</a>
+    <a href="mailto:info@stepuplanguages.com">Correo</a>
+  </div>
+  <div class="footer-note">Propuesta CO-002 · Manizales, Colombia</div>
+</footer>
+
+<!-- =========== JAVASCRIPT =========== -->
+<script>
+(function() {
+
+  /* --- Countdown --- */
+  const EXPIRATION = "2026-04-22T23:59:59";
+  const expDate = new Date(EXPIRATION).getTime();
+  const bar = document.getElementById('countdownBar');
+
+  function updateCountdown() {
+    const now = Date.now();
+    const diff = expDate - now;
+
+    if (diff <= 0 || isNaN(expDate)) {
+      bar.classList.add('expired');
+      document.querySelector('.countdown-label').textContent = '';
+      document.getElementById('countdownTimer').innerHTML =
+        '<div class="countdown-expired-msg">La vigencia de esta propuesta ha finalizado</div>';
+      return;
+    }
+
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000) / 60000);
+    const secs  = Math.floor((diff % 60000) / 1000);
+
+    document.getElementById('cdDays').textContent  = String(days).padStart(2, '0');
+    document.getElementById('cdHours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('cdMins').textContent  = String(mins).padStart(2, '0');
+    document.getElementById('cdSecs').textContent  = String(secs).padStart(2, '0');
+
+    requestAnimationFrame(() => setTimeout(updateCountdown, 1000));
+  }
+  updateCountdown();
+
+  /* --- Example image or placeholder --- */
+  const previewEl = document.getElementById('examplePreview');
+  const imgSrc = "https://stepuplanguages.com/wp-content/uploads/2026/04/LUNA-BRAVA.jpg";
+  if (imgSrc && imgSrc !== "{{" + "EJEMPLO_IMAGEN}}") {
+    previewEl.innerHTML = '<img src="' + imgSrc + '" alt="Ejemplo de página" loading="lazy">';
+  } else {
+    previewEl.innerHTML =
+      '<div class="example-placeholder">' +
+        '<div class="example-placeholder-icon">🖥️</div>' +
+        '<p>Vista previa de la página de ejemplo</p>' +
+      '</div>';
+  }
+
+  /* --- Scroll animations --- */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+})();
+</script>
+
+</body>
+</html>
